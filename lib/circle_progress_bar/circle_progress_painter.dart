@@ -1,12 +1,18 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class CircleProgressPainter extends CustomPainter {
+  /// [backgroundColor] represents the background of arc progressing .
+  /// @Default is [Colors.grey[200]]
   final backgroundColor;
+
+  /// [progressColor] represents the Color of the arc progressing .
+  /// @Default is [Colors.green[600]]
   final progressColor;
+
   double height, width, rightProgress, leftProgress, combinedProgress, arcWidth;
   bool combined;
+
   CircleProgressPainter({
     this.backgroundColor,
     this.leftProgress,

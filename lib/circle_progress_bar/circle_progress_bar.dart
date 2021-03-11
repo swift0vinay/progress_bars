@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:progress_bars/circle_progress_painter.dart';
+import 'circle_progress_painter.dart';
 
 class CircleProgressBar extends StatefulWidget {
   /// [progressColor] represents the Color of the arc progressing .
