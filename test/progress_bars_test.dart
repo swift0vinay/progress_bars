@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_bars/progress_bars.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -32,7 +30,10 @@ class _PageState extends State<Page> {
         child: Text(
           text,
           style: TextStyle(
-              color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         color: Colors.orange,
         onPressed: () {
@@ -45,16 +46,22 @@ class _PageState extends State<Page> {
                     backgroundColor: Colors.black54,
                     progressColor: Colors.orange,
                     size: 40,
-                    child: SizedBox(child: FlutterLogo()),
+                    child: SizedBox(
+                      child: FlutterLogo(),
+                    ),
                   ),
                 );
               });
-          Future.delayed(Duration(seconds: 10)).then((value) {
-            Navigator.pop(context);
-            setState(() {
-              text = "LOADED";
-            });
-          });
+          Future.delayed(Duration(seconds: 10)).then(
+            (value) {
+              Navigator.pop(context);
+              setState(
+                () {
+                  text = "LOADED";
+                },
+              );
+            },
+          );
         },
       ),
     ));
