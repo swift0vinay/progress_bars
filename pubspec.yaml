@@ -1,7 +1,7 @@
 name: progress_bars
 description: Circular progress bars with interesting animation movements.
 version: 0.0.1
-homepage:
+homepage: https://github.com/swift0vinay/progress_bars
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
