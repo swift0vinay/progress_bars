@@ -11,7 +11,7 @@ Circular progress bars with interesting animation movements.
   To use this plugin, add _progress_bars_ as a dependency in your pubspec.yaml file.
 
 ## Circle Progress Bar
-<img src="https://drive.google.com/file/d/1FGqiu8rjmaU_zCL9Hfh3prUOzX4dghg1/view?usp=sharing" width="250" height="500"/>
+<img src="https://github.com/swift0vinay/progress_bars/blob/master/demo/demo.gif" width="250" height="500"/>
 
 
 Circle Progress Bar has 5 properties :
