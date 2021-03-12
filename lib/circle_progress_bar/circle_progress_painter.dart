@@ -10,10 +10,13 @@ class CircleProgressPainter extends CustomPainter {
   /// @Default is [Colors.green[600]]
   final progressColor;
 
+  /// [height] [width] are dimension of canvas ,
+  /// [rightProgress] [leftProgress] are leftAnimation and rightAnimation values respectively ,
   double height, width, rightProgress, leftProgress, combinedProgress, arcWidth;
   bool combined;
-
+  String version;
   CircleProgressPainter({
+    this.version,
     this.backgroundColor,
     this.leftProgress,
     this.rightProgress,
@@ -25,10 +28,12 @@ class CircleProgressPainter extends CustomPainter {
     this.combined,
   });
 
+  /// [degToRad] function to convert angle in degrees to radians .
   num degToRad(num deg) => deg * (pi / 180.0);
 
   @override
   void paint(Canvas canvas, Size size) {
+    /// [radius] is the radius of progress bar .
     double radius = height * 0.5;
 
     Paint pr = Paint()
@@ -43,20 +48,74 @@ class CircleProgressPainter extends CustomPainter {
       ..strokeWidth = radius * 0.25
       ..strokeCap = StrokeCap.round;
 
+    /// [center] is the center of progress bar .
     Offset center = Offset(width / 2, height / 2);
 
     canvas.drawCircle(center, radius, paint);
 
     Rect rect = Rect.fromCircle(center: center, radius: radius);
+
     if (combined) {
-      canvas.drawArc(
-          rect, degToRad(combinedProgress), degToRad(-arcWidth), false, pr);
+      drawArc(
+        canvas,
+        rect,
+        degToRad(combinedProgress),
+        degToRad(-arcWidth),
+        pr,
+      );
     } else {
-      canvas.drawArc(
-          rect, degToRad(leftProgress), degToRad(-arcWidth / 2), false, pr);
-      canvas.drawArc(
-          rect, degToRad(rightProgress), degToRad(arcWidth / 2), false, pr);
+      if (version == 'F') {
+        drawArc(
+          canvas,
+          rect,
+          degToRad(270 - arcWidth / 4),
+          degToRad(arcWidth / 2),
+          pr,
+        );
+        drawArc(
+          canvas,
+          rect,
+          degToRad(leftProgress),
+          degToRad(-arcWidth / 4),
+          pr,
+        );
+        drawArc(
+          canvas,
+          rect,
+          degToRad(rightProgress),
+          degToRad(arcWidth / 4),
+          pr,
+        );
+      } else {
+        drawArc(
+          canvas,
+          rect,
+          degToRad(90 + arcWidth / 4),
+          degToRad(-arcWidth / 2),
+          pr,
+        );
+        drawArc(
+          canvas,
+          rect,
+          degToRad(leftProgress),
+          degToRad(-arcWidth / 4),
+          pr,
+        );
+        drawArc(
+          canvas,
+          rect,
+          degToRad(rightProgress),
+          degToRad(arcWidth / 4),
+          pr,
+        );
+      }
     }
+  }
+
+  /// [drawArc] uses the [canvas.drawArc] method only .
+  drawArc(Canvas canvas, Rect rect, double startAngle, double sweepAngle,
+      Paint pr) {
+    canvas.drawArc(rect, startAngle, sweepAngle, false, pr);
   }
 
   @override

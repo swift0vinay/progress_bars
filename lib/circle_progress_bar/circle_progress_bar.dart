@@ -52,7 +52,7 @@ class _CircleProgressBar extends State<CircleProgressBar>
 
   double height, width, leftProgress, rightProgress, combinedProgress;
   bool combined = true;
-
+  String version = "F";
   @override
   void initState() {
     super.initState();
@@ -72,7 +72,7 @@ class _CircleProgressBar extends State<CircleProgressBar>
     lrController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1000));
     combinedController =
-        AnimationController(vsync: this, duration: Duration(seconds: 3));
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
 
     createSequence();
 
@@ -83,14 +83,41 @@ class _CircleProgressBar extends State<CircleProgressBar>
     combinedAnimation.addListener(
         () => setState(() => combinedProgress = combinedAnimation.value));
 
+    lrController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        if (version == 'F') {
+          setState(() {
+            version = 'S';
+            leftAnimation =
+                Tween<double>(begin: 270, end: 90 + this.widget.arcWidth / 2)
+                    .animate(lrController);
+            rightAnimation =
+                Tween<double>(begin: 270, end: 450 - this.widget.arcWidth / 2)
+                    .animate(lrController);
+          });
+          lrController.forward(from: 0.0);
+        } else {
+          lrController.stop();
+        }
+      }
+    });
+
     combinedController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         combined = false;
-        lrController.forward().whenComplete(() {
+        leftAnimation = Tween<double>(
+                begin: 270 - this.widget.arcWidth / 4,
+                end: 90 + this.widget.arcWidth / 4)
+            .animate(lrController);
+        rightAnimation = Tween<double>(
+                begin: 270 + this.widget.arcWidth / 4,
+                end: 450 - this.widget.arcWidth / 4)
+            .animate(lrController);
+        lrController.forward();
+        Future.delayed(Duration(milliseconds: 2000), () {
+          version = 'F';
           combined = true;
           lrController.reset();
-        });
-        Future.delayed(Duration(milliseconds: 1000), () {
           combinedController.forward(from: 0.0);
         });
       }
@@ -99,6 +126,7 @@ class _CircleProgressBar extends State<CircleProgressBar>
     combinedController.forward();
   }
 
+  /// [createSequence] is an helper function to initialize the animation variable .
   createSequence() {
     leftAnimation = Tween<double>(begin: 270, end: (90 + widget.arcWidth / 2))
         .animate(lrController);
@@ -144,6 +172,7 @@ class _CircleProgressBar extends State<CircleProgressBar>
           combined: combined,
           combinedProgress: combinedProgress,
           arcWidth: widget.arcWidth,
+          version: version,
         ),
         child: Container(
           height: height,
