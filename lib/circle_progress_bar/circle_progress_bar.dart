@@ -88,6 +88,19 @@ class _CircleProgressBar extends State<CircleProgressBar>
         if (version == 'F') {
           setState(() {
             version = 'S';
+            leftAnimation = Tween<double>(
+                    begin: 270 - this.widget.arcWidth / 6,
+                    end: 90 + this.widget.arcWidth / 3)
+                .animate(lrController);
+            rightAnimation = Tween<double>(
+                    begin: 270 + this.widget.arcWidth / 6,
+                    end: 450 - this.widget.arcWidth / 3)
+                .animate(lrController);
+          });
+          lrController.forward(from: 0.0);
+        } else if (version == 'S') {
+          setState(() {
+            version = 'T';
             leftAnimation =
                 Tween<double>(begin: 270, end: 90 + this.widget.arcWidth / 2)
                     .animate(lrController);
@@ -106,15 +119,15 @@ class _CircleProgressBar extends State<CircleProgressBar>
       if (status == AnimationStatus.completed) {
         combined = false;
         leftAnimation = Tween<double>(
-                begin: 270 - this.widget.arcWidth / 4,
-                end: 90 + this.widget.arcWidth / 4)
+                begin: 270 - this.widget.arcWidth / 3,
+                end: 90 + this.widget.arcWidth / 6)
             .animate(lrController);
         rightAnimation = Tween<double>(
-                begin: 270 + this.widget.arcWidth / 4,
-                end: 450 - this.widget.arcWidth / 4)
+                begin: 270 + this.widget.arcWidth / 3,
+                end: 450 - this.widget.arcWidth / 6)
             .animate(lrController);
         lrController.forward();
-        Future.delayed(Duration(milliseconds: 2000), () {
+        Future.delayed(Duration(milliseconds: 3000), () {
           version = 'F';
           combined = true;
           lrController.reset();

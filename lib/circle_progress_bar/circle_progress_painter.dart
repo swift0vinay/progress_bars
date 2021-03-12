@@ -57,57 +57,31 @@ class CircleProgressPainter extends CustomPainter {
 
     if (combined) {
       drawArc(
-        canvas,
-        rect,
-        degToRad(combinedProgress),
-        degToRad(-arcWidth),
-        pr,
-      );
+          canvas, rect, degToRad(combinedProgress), degToRad(-arcWidth), pr);
     } else {
       if (version == 'F') {
+        drawArc(canvas, rect, degToRad(270 - arcWidth / 3),
+            degToRad(2 * arcWidth / 3), pr);
         drawArc(
-          canvas,
-          rect,
-          degToRad(270 - arcWidth / 4),
-          degToRad(arcWidth / 2),
-          pr,
-        );
+            canvas, rect, degToRad(leftProgress), degToRad(-arcWidth / 6), pr);
         drawArc(
-          canvas,
-          rect,
-          degToRad(leftProgress),
-          degToRad(-arcWidth / 4),
-          pr,
-        );
+            canvas, rect, degToRad(rightProgress), degToRad(arcWidth / 6), pr);
+      } else if (version == 'S') {
+        drawArc(canvas, rect, degToRad(90 + arcWidth / 6),
+            degToRad(-arcWidth / 3), pr);
+        drawArc(canvas, rect, degToRad(270 - arcWidth / 6),
+            degToRad(arcWidth / 3), pr);
         drawArc(
-          canvas,
-          rect,
-          degToRad(rightProgress),
-          degToRad(arcWidth / 4),
-          pr,
-        );
+            canvas, rect, degToRad(leftProgress), degToRad(-arcWidth / 6), pr);
+        drawArc(
+            canvas, rect, degToRad(rightProgress), degToRad(arcWidth / 6), pr);
       } else {
+        drawArc(canvas, rect, degToRad(90 + arcWidth / 3),
+            degToRad(-2 * arcWidth / 3), pr);
         drawArc(
-          canvas,
-          rect,
-          degToRad(90 + arcWidth / 4),
-          degToRad(-arcWidth / 2),
-          pr,
-        );
+            canvas, rect, degToRad(leftProgress), degToRad(-arcWidth / 6), pr);
         drawArc(
-          canvas,
-          rect,
-          degToRad(leftProgress),
-          degToRad(-arcWidth / 4),
-          pr,
-        );
-        drawArc(
-          canvas,
-          rect,
-          degToRad(rightProgress),
-          degToRad(arcWidth / 4),
-          pr,
-        );
+            canvas, rect, degToRad(rightProgress), degToRad(arcWidth / 6), pr);
       }
     }
   }
